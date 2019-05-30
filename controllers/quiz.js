@@ -22,6 +22,8 @@ const cloudinary_upload_options = {
 
 //const Op = Sequelize.Op;
 
+//const Op = Sequelize.Op;
+
 // Autoload el quiz asociado a :quizId
 exports.load = (req, res, next, quizId) => {
 
