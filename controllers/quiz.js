@@ -1,6 +1,8 @@
 const Sequelize = require("sequelize");
 const {models} = require("../models");
 
+//const Op = Sequelize.Op;
+
 // Autoload el quiz asociado a :quizId
 exports.load = (req, res, next, quizId) => {
 
@@ -152,4 +154,81 @@ exports.check = (req, res, next) => {
         result,
         answer
     });
+};
+
+// exports.randomPlay = (req,res,next) => {
+
+//     const score = req.session.score || 0;
+        
+//     if(score === 0) {
+//         req.session.randomplay = [];
+//     }
+   
+    
+//     models.quiz.findOne({
+//              where: {id: {[Sequelize.Op.notIn]: req.session.randomPlay}},
+//              order:[Sequelize.fn( 'RANDOM' )]
+//     })
+//     .then(quiz => {
+//         if(!quiz){
+//             req.session.score = 0;
+//             return res.render('quizzes/random_nomore.ejs', {
+//                 score
+//             });
+//         }
+//         else{
+//             return res.render('quizzes/random_play.ejs', {quiz,score} );
+//         }
+//     })
+//     .catch(error => {
+//         next(error);
+//     }); 
+// };
+
+//GET /quizzes/randomplay
+exports.randomPlay = (req,res,next) => {
+    
+    const score = req.session.score || 0;
+    
+    if(score === 0){
+        req.session.randomPlay = [];
+    }
+    
+    models.quiz.findOne({
+        where: {id: {[Sequelize.Op.notIn]: req.session.randomPlay}},
+        order: [Sequelize.fn( 'RANDOM' ),]
+    })
+        .then(quiz => {
+            if(!quiz){
+                req.session.score = 0;
+                return res.render('quizzes/random_none.ejs', {score});
+            }
+            else{
+                req.session.score = score;
+                return res.render('quizzes/random_play.ejs', {quiz,score} );
+            }
+        })
+        .catch(error => {
+            next(error);
+    }); 
+};
+
+//GET /quizzes/randomcheck/:quizId
+exports.randomCheck = (req, res, next) => {
+    const {quiz, query} = req;
+    let score = req.session.score;
+    let answer = query.answer || "";
+
+     let result = answer.toLowerCase().trim() === quiz.answer.toLowerCase().trim();
+     if (result){
+            req.session.randomPlay.push(quiz.id);
+            score++;
+     }
+
+    req.session.score = score;
+    res.render('quizzes/random_result', {
+         result,
+         score,
+         answer
+     });
 };
