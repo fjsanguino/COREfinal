@@ -12,6 +12,5 @@ router.use('/api', apiRouter);
 // Routes mounted at '/'.
 router.use(/^(?!\/api\/)/, quizRouter);
 
-//-----------------------------------------------------------
 
 module.exports = router;
