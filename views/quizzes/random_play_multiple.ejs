@@ -1,0 +1,24 @@
+<h1>
+	Random	Play Multiple Choice:
+</h1>
+
+<div>
+	Successful	answers	=	<span id="score"><%=	scoreMultiple	%></span>
+</div>
+
+<form	method="get"	action="/quizzes/randomcheckmultiple/<%=	quiz.id	%>">
+	<p>
+		Question:	<b><%=	quiz.question	%></b>
+	</p>
+	
+	<div	class="wideRow">
+		<% for (var i in posibleAnswers) { %>
+    		<% var answer = posibleAnswers[i]; %>
+    		<input type="radio" name="option" value="<%=answer%>" /> <%=answer%>
+		<% } %>
+		
+	</div>
+	<input	type="submit" class="itemNarrow" id="send" value="Check">
+
+
+</form>

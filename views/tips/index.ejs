@@ -14,7 +14,7 @@
 
               <li>
                     <a href="/quizzes/<%=quizId %>/tips/<%= tip.id%>/edit"><%= tip.text %></a>
-                    <span class="autor"><%= tipsAuthorId%></span>
+                    <span class="autor">by <%= session.user.username%></span>
 
                     <% if (!accepted && (isAdmin || isQuizAuthor)) { %>
 

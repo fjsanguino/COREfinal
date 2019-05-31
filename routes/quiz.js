@@ -146,6 +146,11 @@ router.get('/quizzes/randomcheck/:quizId(\\d+)',
     quizController.randomCheck);
 
 
+router.get('/quizzes/randomplaymultiple',      
+    quizController.randomPlayMultiple);
+router.get('/quizzes/randomcheckmultiple/:quizId(\\d+)',
+    quizController.randomCheckMultiple);
+
 
 router.post('/quizzes/:quizId(\\d+)/tips',
     sessionController.loginRequired,

@@ -8,18 +8,16 @@
 
 <div>
 	<%	if	(!result)	{	%>
-		You have failed: Your Score has been <span	id="score"><%=score %></span>
+		You have failed: Your Score has been <span	id="score"><%=scoreMultiple %></span>
 	<%	}	else	{	%>
-		You	have	succeeded.
-		Successful	answers	=	<span	id="score"><%=	score	%></span>
+		You	have succeeded. Your score is <span	id="score"><%=	scoreMultiple	%></span>
 	<% } %>
 </div>
-
 
 <p>
 	<%	if	(!result)	{	%>
 	<a	href="/quizzes">	End	of	Play	</a>
 	<%	}	else	{	%>
-	<a	href="/quizzes/randomplay"><button>Continue	playing</button></a>
+	<a	href="/quizzes/randomplaymultiple"><button>Continue	playing</button></a>
 	<% } %>
 </p>

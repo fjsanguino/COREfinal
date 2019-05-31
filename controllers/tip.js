@@ -140,7 +140,7 @@ exports.update = (req, res, next) => {
 
     tip.save({fields: ["text", "accepted"]})
     .then(tip => {
-        req.flash('success', 'Tip edited successfully.');
+        req.flash('success', 'Tip edited successfully.' + tip.author.username);
         res.redirect('/quizzes/' + tip.quizId);
     })
     .catch(Sequelize.ValidationError, error => {
