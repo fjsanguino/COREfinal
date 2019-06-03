@@ -101,8 +101,7 @@ router.delete('/users/:userId(\\d+)',
     sessionController.adminOrMyselfRequired,
     userController.destroy);
 
-router.put('/quizzes/randomupdatescore/:userId(\\d+)',
-    sessionController.loginRequired,
+router.put('/users/randomupdatescore/:userId(\\d+)',
     sessionController.adminOrMyselfRequired,
     userController.updatescore);
 

@@ -11,9 +11,14 @@
 	<p>
 		<%	if	(!result)	{	%>
 		You have failed: Your Score has been <span	id="score"><%=scoreMultiple %></span>
-		<form method="post" action="/quizzes/randomupdatescore/<%= session.user.id %>?_method=PUT">
+		
+		
+
+		<form method="post" action="/users/randomupdatescore/<%= session.user.id %>?_method=PUT">
+	 
 	    	<button type="submit" name = "scoreMultiple" value = "<%= scoreMultiple%>">Continue <%=scoreMultiple%></button>
 		</form>
+
 		<%	}	else	{	%>
 		You	have	succeeded.
 		Successful	answers	=	<span	id="score"><%=	scoreMultiple	%></span>

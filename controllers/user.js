@@ -209,46 +209,54 @@ exports.update = (req, res, next) => {
     
     //user.username = "el guapo";
     //user.token = "new token"
-    user.score = user.score || 0;
+   // user.score = user.score || 0;
     user.scoremultiple = user.scoremultiple || 0;
-    user.scoremultiple = user.scoremultiple || 0;  
+    user.scorenormal = user.scorenormal || 0;  
 
-    body.scoreNormal = body.scoreNormal || 0;
-    body.scoreMultiple = body.scoreMultiple || 0;
+    //body.scoreNormal = body.scoreNormal || 0;
+    //body.scoreMultiple = body.scoreMultiple || 0;
 
     /*.scorenormal = body.scoreNormal;
     user.scoremultiple = body.scoreMultiple;
-
-
     user.save({fields: ["username", "token", "scorenormal", "scoremultiple", "score"]})
     .then( user =>{
         req.flash('success', 'User score updated successfully. Score.body:' + user.username + ' '+ body.scoreMultiple + ' '+ body.scoreNormal + ' ' + body.score);
         req.flash('success', 'User score updated successfully. Score.user:'+ user.scoremultiple + ' '+ user.scoreNormal + ' ' + user.score);
-
         res.redirect('/quizzes');
-
     })*/
 
-    if (body.scoreNormal > user.scoreNormal){
-        user.scoreNormal = body.scoreNormal;
+    let fields_to_update = [];
+
+    if (req.body.scoreNormal) {
+        if (body.scoreNormal > user.scorenormal){
+            user.scorenormal = body.scoreNormal;
+            fields_to_update.push('scorenormal');
+        }
     }
 
-    
-    if (body.scoreMultiple > user.scoreMultiple){
-         user.scoreMultiple = body.scoreMultiple;
+    const result = body.scoreMultiple > user.scoremultiple
+    if (req.body.scoreMultiple) {
+        if (body.scoreMultiple > user.scoremultiple){
+            user.scoremultiple = body.scoreMultiple;
+            fields_to_update.push('scoremultiple');
+        }
     }
-
     
-    models.quiz.count()
+    user.score = user.scoremultiple + user.scorenormal;
+    fields_to_update.push('score');
+
+    user.save({fields: fields_to_update})
+
+    /*models.quiz.count()
      .then( count => {
-        user.score = (user.scoreNormal + user.scoreMultiple)*count;
-        return user.save({fields: ["scoreNormal", "scoreMultiple", "score"]});
-    })
+        user.score = (user.scorenormal + user.scoremultiple)*count;
+        return user.save({fields: ["scorenormal", "scoremultiple", "score"]});
+    })*/
     .then( user =>{
-        req.flash('success', 'User score updated successfully. Score.body:'+ body.scoreMultiple + ' '+ body.scoreNormal + ' ' + body.score);
-        req.flash('success', 'User score updated successfully. Score.user:'+ user.scoreMultiple + ' '+ user.scoreNormal + ' ' + user.score);
+        req.flash('success', 'User score updated successfully. Score.body:'+ body.scoreMultiple + ' '+ body.scoreNormal + ' ' + user.username);
+        req.flash('success', 'User score updated successfully. Score.user:'+ user.scoremultiple + ' '+ user.scorenormal + ' ' /*+ user.score*/);
 
-        res.redirect('/quizzes');
+        res.redirect('/users/'+ user.id);
 
     })
     .catch(Sequelize.ValidationError, error => {
@@ -261,7 +269,7 @@ exports.update = (req, res, next) => {
     });
     
 
- }
+}
 
 
 

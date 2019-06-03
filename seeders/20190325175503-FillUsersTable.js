@@ -21,7 +21,7 @@ module.exports = {
                 username: 'pepe',
                 password: crypt.encryptPassword('5678', 'bbbb'),
                 salt: 'bbbb',
-                score: 0, scorenormal: 0, scoremultiple: 0,
+                score: '0', scorenormal: '0', scoremultiple: '0',
                 token: authentication.createToken(),
                 createdAt: new Date(), updatedAt: new Date()
             }
